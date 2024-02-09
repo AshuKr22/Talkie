@@ -1,3 +1,4 @@
+import generateTokenandSetCookie from "../../utils/generateToken.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 export const signup= async (req,res)=>
@@ -27,9 +28,13 @@ export const signup= async (req,res)=>
         gender,
         profilePic: gender === "male" ? boyProfilePic : girlProfilePic,
     });
-    await newUser.save();
+    
     if(newUser)
     {
+        //generated JWT token here.
+        generateTokenandSetCookie(newUser._id,res)
+        //if the new user is created successfully save it to DB
+        await newUser.save();
         res.status(201).json({
             _id: newUser._id,
             fullName: newUser.fullName,
