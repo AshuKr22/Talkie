@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 export const signup= async (req,res)=>
 {
     try{
+        
     const { fullName, username, password, confirmPassword, gender } = req.body;
     if(password!==confirmPassword)
     {
@@ -55,9 +56,34 @@ export const signup= async (req,res)=>
 
 }
 
-export const login=(req,res)=>
+export const login= async (req,res)=>
 {
-    console.log("login");
+    try {
+        const {username,password} = req.body;
+        //find the user
+        const user = await User.findOne({username});
+        //user?.password||" " means check if user exists , if it doesnt compare password with a null string.
+        const isPasswdValid = bcrypt.compare(password,user?.password||"")
+        if(!user|| !isPasswdValid)
+        {
+            return res.status(400).json({error: "Invalid username or password"});
+
+        }
+        //generate jwt here.
+        generateTokenandSetCookie(user._id,res);
+        //return succesful login status.
+        res.status(200).json({
+			_id: user._id,
+			fullName: user.fullName,
+			username: user.username,
+			profilePic: user.profilePic,
+		});
+        
+    } catch (error) {
+        console.log("Error in login controller", error.message);
+		res.status(500).json({ error: "Internal Server Error" });
+        
+    }
 
 }
 export const logout=(req,res)=>
