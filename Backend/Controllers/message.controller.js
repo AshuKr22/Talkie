@@ -4,8 +4,8 @@ export const sendMessage = async (req, res)=>
 {
     try 
     {
-        const {message}= req.body;
-    const {id:receiverId} = req.body;
+    const {message}= req.body;
+    const { id: receiverId } = req.params;
     const senderId = req.user._id;
     let conversation = await Conversation.findOne(
        {
@@ -24,13 +24,17 @@ export const sendMessage = async (req, res)=>
         message,
     });
 
-    if (newMessage) {
+    if (newMessage) 
+    {
         conversation.messages.push(newMessage._id);
     }
     res.status(201).json(newMessage);
-
+    await conversation.save();
+    await newMessage.save();
         
     } 
+    
+
     catch (error) 
     {
         console.log("error in sendMessage Controller :",error.message);
@@ -39,4 +43,29 @@ export const sendMessage = async (req, res)=>
         
     }
     
+}
+export const getMessages = async(req,res)=>
+{
+    try {
+        const { id: userToChatId } = req.params;
+		const senderId = req.user._id;
+        const conversation = await Conversation.findOne({
+			participants: { $all: [senderId, userToChatId] },
+		}).populate("messages"); // NOT REFERENCE BUT ACTUAL MESSAGES
+
+		if (!conversation) return res.status(200).json([]);
+
+		const messages = conversation.messages;
+
+		res.status(200).json(messages);
+        
+
+        
+    } catch (error)
+    {
+        console.log("Error in protectRoute middleware: ", error.message);
+		res.status(500).json({ error: "Internal server error" });
+
+        
+    }
 }
