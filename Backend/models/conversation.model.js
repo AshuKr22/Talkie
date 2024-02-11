@@ -15,7 +15,7 @@ const conversationSchema = new mongoose.Schema(
 				default: [],
 			},
 		],
-	},
+	}, 
 	{ timestamps: true }
 );
 
