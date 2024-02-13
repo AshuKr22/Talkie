@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Login = () => {
   return (
@@ -28,9 +29,9 @@ const Login = () => {
 							  className='w-full input input-bordered h-10'/>
                 </div>
                 </form>
-          <a href="#"  className='link hover:text-blue-500 mt-2'>
+          <Link to="/signup"  className='link hover:text-blue-500 mt-2'>
             Don't have an account?
-          </a>
+          </Link>
           <div>
           <button className='btn btn-block mt-2 btn-sm'>
             Login
