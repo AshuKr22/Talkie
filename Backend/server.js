@@ -1,11 +1,11 @@
 import express from "express";
 import path from "path";
 import dotenv from "dotenv";
-import authRoutes from "./Routes/auth.routes.js"
+import authRoutes from "./routes/auth.routes.js"
 import connectToMongoDB from "./db/connectToMongoDB.js";
-import messageRoutes from "./Routes/message.routes.js"
+import messageRoutes from "./routes/message.routes.js"
 import cookieParser from "cookie-parser";
-import userRoutes from "./Routes/user.routes.js"
+import userRoutes from "./routes/user.routes.js"
 import { app,server,io } from "./socket/socket.js";
 dotenv.config();
 const port = process.env.PORT||5000;
