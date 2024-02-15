@@ -5,7 +5,7 @@ import connectToMongoDB from "./db/connectToMongoDB.js";
 import messageRoutes from "./Routes/message.routes.js"
 import cookieParser from "cookie-parser";
 import userRoutes from "./Routes/user.routes.js"
-const app = express();
+import { app,server,io } from "./socket/socket.js";
 dotenv.config();
 const port = process.env.PORT||5000;
 
@@ -22,7 +22,7 @@ app.get("/",(req,res)=>
     res.send("Hello World")
 })
 
-app.listen(port,()=>
+server.listen(port,()=>
 {
     connectToMongoDB();
     console.log(`App is listening on port ${port}`)
