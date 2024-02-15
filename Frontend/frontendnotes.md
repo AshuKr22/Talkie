@@ -118,3 +118,116 @@ Certainly! Let's address each question briefly:
         - Ensure proper contrast for text and background colors.
         - Implement keyboard navigation (focus management) for form elements.
 
+
+
+### When to use Custom Hooks ?-
+Certainly! Custom hooks in React are powerful tools that allow you to encapsulate and reuse logic across multiple components. Here's when you should consider creating custom hooks:
+
+1. **Reusability and DRY Principle**:
+    - **Reason**: Custom hooks promote the **DRY (Don't Repeat Yourself)** principle. If you find yourself duplicating logic (such as state management, API calls, or event handling) across different components, it's a good sign to create a custom hook.
+    - **Example**: Suppose you have a piece of logic that fetches data from an API. Instead of repeating this logic in multiple components, create a custom hook (e.g., `useFetch`) to handle data fetching consistently.
+
+2. **Complex Logic Extraction**:
+    - **Reason**: When your component logic becomes complex, it's beneficial to extract it into a custom hook. This keeps your components cleaner and more focused on their specific responsibilities.
+    - **Example**: Imagine handling authentication with multiple steps (login, logout, token management). A custom hook (`useAuth`) can encapsulate this complexity.
+
+3. **Sharing Logic Between Components**:
+    - **Reason**: Custom hooks allow you to share logic between unrelated components. If two or more components need similar functionality, create a custom hook to centralize that logic.
+    - **Example**: Consider a network status indicator. You want to track online/offline status in different components. A custom hook (`useNetworkStatus`) can manage this shared logic.
+
+4. **Naming Convention**:
+    - **Guideline**: Custom hooks should start with the prefix "use" (e.g., `useFetch`, `useAuth`, `useFormInput`).
+    - **Reason**: Following this convention makes it clear that a function is a custom hook and should be used as such.
+    - **Example**: Naming a custom hook `useLocalStorage` indicates its purpose.
+
+5. **Use React's Built-in Hooks Within Custom Hooks**:
+    - **Guideline**: Inside custom hooks, you can use React's built-in hooks (e.g., `useState`, `useEffect`, `useContext`) as needed.
+    - **Reason**: Custom hooks often rely on these core hooks to manage state, side effects, or context.
+    - **Example**: A custom hook for form input validation might use `useState` and `useEffect`.
+
+
+
+
+
+### Rules to call Hooks -
+Certainly! Let's dive into the rules for using **React Hooks**. Hooks are a powerful addition to React that allow you to use state and other React features without writing class components. Here are the two key rules you need to follow when using hooks:
+
+1. **Only Call Hooks at the Top Level**:
+    - **Do not call Hooks inside loops, conditions, or nested functions**. Instead, always use Hooks at the top level of your React function, **before any early returns**.
+    - By adhering to this rule, you ensure that Hooks are called in the same order each time a component renders. This consistency allows React to correctly preserve the state of Hooks between multiple `useState` and `useEffect` calls.
+    - For example, avoid doing this:
+
+    ```jsx
+    function MyComponent() {
+      if (someCondition) {
+        // ❌ Invalid: Calling a Hook inside a condition
+        const [count, setCount] = useState(0);
+      }
+      // ...
+    }
+    ```
+
+    Instead, do this:
+
+    ```jsx
+    function MyComponent() {
+      // ✅ Valid: Call Hooks at the top level
+      const [count, setCount] = useState(0);
+      if (someCondition) {
+        // ...
+      }
+      // ...
+    }
+    ```
+
+2. **Only Call Hooks from React Functions**:
+    - **Do not call Hooks from regular JavaScript functions**. Instead, you can:
+        - Call Hooks from **React function components**.
+        - Call Hooks from **custom Hooks** (which we'll learn about on the next page).
+    - Following this rule ensures that all stateful logic in a component is clearly visible from its source code.
+
+3. **Order Matters**:
+    - React relies on the order in which Hooks are called to determine which state corresponds to which `useState` or `useEffect` call.
+    - For example, if you have multiple `useState` or `useEffect` calls in a single component, make sure their order remains consistent across renders.
+
+### useGetConversations Notes-
+Certainly! Let's break down the provided React code and then proceed with the interview-style questions:
+
+1. **What does this code do?**
+   - This code defines a custom React hook called `useGetConversations`.
+   - The hook fetches data from an API endpoint (`/api/users`) and manages the loading state and conversation data.
+
+2. **What are the dependencies used in this code?**
+   - The code imports `useEffect` and `useState` from the React library.
+   - It also imports the `toast` function from the `react-hot-toast` package.
+
+3. **What is the purpose of the `useGetConversations` hook?**
+   - The purpose of this hook is to handle fetching conversations data from an API and manage the loading state.
+
+4. **What does the `loading` state represent?**
+   - The `loading` state indicates whether the data is currently being fetched (i.e., loading is in progress).
+
+5. **What does the `conversations` state represent?**
+   - The `conversations` state holds the data retrieved from the API (presumably a list of conversations).
+
+6. **What does the `useEffect` block do?**
+   - The `useEffect` block runs when the component using this hook mounts.
+   - It calls the `getConversations` function (defined within the `useEffect`) to fetch data from the API.
+   - It sets the `loading` state to `true` during the fetch, handles any errors, and sets the `loading` state back to `false` after completion.
+
+7. **What happens inside the `getConversations` function?**
+   - It sets the `loading` state to `true`.
+   - It makes an asynchronous request to the `/api/users` endpoint.
+   - If successful, it parses the response data and sets it in the `conversations` state.
+   - If there's an error, it displays an error toast using the `toast.error` function.
+   - Finally, it sets the `loading` state back to `false`.
+
+8. **What is the purpose of the `throw new Error(data.error)` line?**
+   - If the API response contains an `error` property, this line throws an error with the error message received from the API.
+
+9. **What does the `return { loading, conversations }` statement do?**
+   - It returns an object with two properties: `loading` and `conversations`.
+   - These properties can be accessed by components that use this hook.
+
+10. **How is this hook intended to be used in a component?**
+    - A component can import and use this hook to fetch conversations data and manage the loading state.

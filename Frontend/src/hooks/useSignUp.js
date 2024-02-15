@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
+import { useAuthContext } from '../context/AuthContext';
 
 const useSignUp = () => {
-  const [loading, setLoading ]= useState(true);
-  
+  const [loading, setLoading ]= useState(false);
+  const {setAuthUser} = useAuthContext();
   const signup = async({ fullName, username, password, confirmPassword, gender })=>{
   
     const success = HandleInputErrors({ fullName, username, password, confirmPassword, gender })
@@ -23,10 +24,14 @@ const useSignUp = () => {
     })
     //jsonifying the response from backend.
     const data = await res.json();
+    if (data.error) {
+      throw new Error(data.error);
+    }
+    //local storage
+    localStorage.setItem("talkie-user",JSON.stringify(data));
+    setAuthUser(data);
     console.log(data);
 
-
-    
     
   } catch (error) {
     toast.error(error.message);

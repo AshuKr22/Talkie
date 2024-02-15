@@ -63,7 +63,7 @@ export const login= async (req,res)=>
         //find the user
         const user = await User.findOne({username});
         //user?.password||" " means check if user exists , if it doesnt compare password with a null string.
-        const isPasswdValid = bcrypt.compare(password,user?.password||"")
+        const isPasswdValid = await bcrypt.compare(password,user?.password||"")
         if(!user|| !isPasswdValid)
         {
             return res.status(400).json({error: "Invalid username or password"});

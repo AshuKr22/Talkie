@@ -8,9 +8,10 @@ import { createContext,useContext } from 'react'
 export const AuthContextProvider = ({children})=>
 {
     const [authUser , setAuthUser]= useState(JSON.parse(localStorage.getItem("talkie-user")) || null);
-    <AuthContext.Provider value={{authUser,setAuthUser}}>
+    
+    return (<AuthContext.Provider value={{authUser,setAuthUser}}>
         {children}
-    </AuthContext.Provider>
+    </AuthContext.Provider>)
 
 }
 

@@ -73,3 +73,21 @@ The error message you're encountering, "A component is changing a controlled inp
 
 Remember that controlled components use state to manage their values, while uncontrolled components rely on DOM properties (such as `defaultValue`). 
 
+
+
+
+#### error 4 : Error: Invalid hook call. Hooks can only be called inside of the body of a function component.
+##### Solution : 
+
+Possible solution: 
+To fix this error, you need to identify which of the above causes is applicable to your case, and follow the corresponding suggestions1. In your code, it seems that you are calling the useAuthContext hook inside the logout function, which is a promise. This breaks the rule of calling hooks at the top level of your function component or custom hook1. To fix this, you need to move the useAuthContext hook outside the logout function, and pass the authContext as a parameter to the logout function. For example:
+function LogoutBtn() {
+  // ✅ Good: call the hook at the top level
+  const authContext = useAuthContext();
+
+  function logout(authContext) {
+    // ... use authContext here
+  }
+}
+
+#####
