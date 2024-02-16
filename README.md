@@ -1,6 +1,7 @@
 # Talkie 🚀
 
 Talkie is a real-time communication app built with the MERN stack, Socket.io, TailwindCSS, and Daisy UI. It enables users to chat, share messages, and stay connected seamlessly.
+**Deployed on Render , May take time to load first at first** : [Talkie](https://talkie-chat.onrender.com/) 
 
 ## Features 🎙️
 
