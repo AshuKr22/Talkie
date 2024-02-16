@@ -30,14 +30,4 @@ Talkie is a real-time communication app built with the MERN stack, Socket.io, Ta
 
 4. Open your browser and navigate to `http://localhost:3000`.
 
-## Contributing 👾
 
-Contributions are welcome! If you find any issues or want to add new features, feel free to submit a pull request.
-
-## License 🎃
-
-This project is licensed under the MIT License.
-
----
-
-Feel free to customize this README with additional details or emojis to match your project's personality! 😊
